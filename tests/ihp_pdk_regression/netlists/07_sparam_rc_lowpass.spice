@@ -1,0 +1,16 @@
+* VF Transient: Frequency-dependent RC lowpass S-param
+* Tests VF rational fitting with actual frequency dependence
+* RC lowpass: R=10 series, C=5pF shunt => 3dB at ~1.17 GHz
+* A fast pulse (100ps rise) has wideband content that should be filtered.
+* Expected: v(3) is a smoothed/delayed version of v(2)
+V1 1 0 PULSE(0 1 1n 0.1n 0.1n 5n 20n)
+R1 1 2 50
+A1 [2 0 3 0] lowpass_model
+.model lowpass_model sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/rc_lowpass.s2p"
+R2 3 0 50
+.tran 0.01n 40n
+.control
+run
+wrdata /tests/results/07_sparam_rc_lowpass.csv v(2) v(3)
+.endc
+.end

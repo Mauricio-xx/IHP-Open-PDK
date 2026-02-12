@@ -1,0 +1,16 @@
+* VF Transient: Sinusoidal steady-state verification
+* Drive S-param with 1 GHz sine, let it reach steady state
+* At 1 GHz, RC lowpass |S21| ~ 0.69 (from Touchstone data)
+* After initial transient, output amplitude should stabilize near
+* 0.69 * input_amplitude at the S-param ports
+V1 1 0 SIN(0 1 1G 0 0)
+R1 1 2 50
+A1 [2 0 3 0] lowpass_sine
+.model lowpass_sine sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/rc_lowpass.s2p"
+R2 3 0 50
+.tran 0.005n 20n
+.control
+run
+wrdata /tests/results/15_sparam_sine_steady.csv v(2) v(3)
+.endc
+.end

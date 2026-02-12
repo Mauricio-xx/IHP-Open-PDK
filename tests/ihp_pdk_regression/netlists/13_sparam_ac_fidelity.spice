@@ -1,0 +1,16 @@
+* S-param AC fidelity: verify AC response matches Touchstone data
+* RC lowpass S21 should show -3dB at ~1.17 GHz
+* At 100 MHz: |S21| ~ 0.908 => |v(out)| ~ 0.908V (with 2V source, matched)
+* At 5 GHz: |S21| ~ 0.206 => significant attenuation
+* This test exercises the AC interpolation path (not VF)
+V1 10 0 AC 2
+R1 10 in 50
+A1 [in 0 out 0] lowpass_ac
+.model lowpass_ac sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/rc_lowpass.s2p"
+R2 out 0 50
+.ac dec 20 10Meg 100G
+.control
+run
+wrdata /tests/results/13_sparam_ac_fidelity.csv vm(in) vm(out)
+.endc
+.end

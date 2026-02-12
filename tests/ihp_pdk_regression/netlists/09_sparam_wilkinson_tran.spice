@@ -1,0 +1,16 @@
+* VF Transient: 3-port Wilkinson power divider
+* Tests odd-port-count VF transient (3x3 matrix fitting)
+* Expected: equal pulse appears at both outputs (ports 2 and 3)
+* Ideal: v(out_a) ~ v(out_b) ~ 0.5 * v(in) (matched divider)
+V1 1 0 PULSE(0 1 1n 0.1n 0.1n 5n 20n)
+R1 1 in 50
+A1 [in 0 out_a 0 out_b 0] wilkinson_model
+.model wilkinson_model sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/wilkinson.s3p"
+R2 out_a 0 50
+R3 out_b 0 50
+.tran 0.01n 40n
+.control
+run
+wrdata /tests/results/09_sparam_wilkinson_tran.csv v(in) v(out_a) v(out_b)
+.endc
+.end

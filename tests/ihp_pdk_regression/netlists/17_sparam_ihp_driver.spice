@@ -1,0 +1,24 @@
+* Integration: S-param interconnect + IHP NMOS transistor
+* Models a PCB trace (S-param) driving a MOSFET gate
+* Tests VF transient interoperating with OSDI PSP models
+* Expected: gate signal is filtered by S-param, drain shows inverted output
+Vdd dd 0 1.2
+Vin 1 0 PULSE(0 1.2 1n 0.1n 0.1n 5n 20n)
+Rsrc 1 2 50
+* S-param interconnect (flat test.s2p, S21=0.8)
+A1 [2 0 gate 0] trace_model
+.model trace_model sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/test.s2p"
+Rterm gate 0 50
+* IHP NMOS inverter with resistive load
+Rd dd drain 2k
+XM1 drain gate 0 0 sg13_lv_nmos w=5u l=0.45u ng=1 m=1
+.lib cornerMOSlv.lib mos_tt
+.param temp=27
+.tran 0.01n 40n
+.control
+save all
+run
+wrdata /tests/results/17_sparam_ihp_driver.csv v(2) v(gate) v(drain)
+.endc
+.GLOBAL GND
+.end

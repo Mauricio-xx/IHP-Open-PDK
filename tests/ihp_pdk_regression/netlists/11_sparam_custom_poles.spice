@@ -1,0 +1,16 @@
+* VF Transient: Custom VF parameters (explicit pole count)
+* Uses the frequency-dependent RC lowpass with n_poles=4, tight tolerance
+* Tests that the VF parameter interface works correctly
+.options reltol=1e-3 itl4=200
+V1 1 0 PULSE(0 1 1n 0.1n 0.1n 5n 20n)
+R1 1 2 50
+A1 [2 0 3 0] lowpass_custom
+.model lowpass_custom sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/rc_lowpass.s2p"
++  n_poles=4 vf_tol=1e-4 vf_maxiter=50
+R2 3 0 50
+.tran 0.01n 40n
+.control
+run
+wrdata /tests/results/11_sparam_custom_poles.csv v(2) v(3)
+.endc
+.end

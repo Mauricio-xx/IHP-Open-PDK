@@ -1,0 +1,17 @@
+* DC LV PMOS Id-Vds
+* PMOS: source/bulk at VDD=1.2V, sweep drain and gate voltages
+* Vgs ranges from -1.2V to -0.3V, Vds from -1.2V to 0V
+Vdd dd GND 1.2
+Vg G GND 0
+Vds D GND 0
+Vd D net1 0
+XM1 net1 G dd dd sg13_lv_pmos w=1.0u l=0.45u ng=1 m=1
+.lib cornerMOSlv.lib mos_tt
+.param temp=27
+.control
+save all
+dc Vds 0 1.2 0.01 Vg 0 0.9 0.1
+wrdata /tests/results/02_dc_lv_pmos.csv vd#branch
+.endc
+.GLOBAL GND
+.end

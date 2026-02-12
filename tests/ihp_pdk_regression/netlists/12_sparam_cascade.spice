@@ -1,0 +1,21 @@
+* VF Transient: Two cascaded S-param blocks
+* Tests multiple VF instances in same circuit
+* Two RC lowpass sections in series => steeper rolloff
+* Node 3 is shared: port2 of A1 drives port1 of A2
+* Expected: v(4) more filtered than v(3) (double filtering)
+.options reltol=1e-3 itl4=200
+V1 1 0 PULSE(0 1 1n 0.2n 0.2n 5n 20n)
+R1 1 2 50
+* Stage 1
+A1 [2 0 3 0] lp_stage1
+.model lp_stage1 sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/rc_lowpass.s2p"
+* Stage 2 (directly cascaded, no intermediate termination)
+A2 [3 0 4 0] lp_stage2
+.model lp_stage2 sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/rc_lowpass.s2p"
+R2 4 0 50
+.tran 0.01n 40n
+.control
+run
+wrdata /tests/results/12_sparam_cascade.csv v(2) v(3) v(4)
+.endc
+.end

@@ -1,0 +1,17 @@
+* VF Transient: 4-port crosstalk model
+* Tests 4x4 matrix VF fitting + transient convolution
+* Port 1 driven, ports 2-4 terminated
+* Expected: v(3) large (thru), v(5) small (crosstalk), v(4) ~0
+V1 1 0 PULSE(0 1 1n 0.1n 0.1n 5n 20n)
+R1 1 2 50
+A1 [2 0 3 0 4 0 5 0] xtalk_model
+.model xtalk_model sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/crosstalk.s4p"
+R2 3 0 50
+R3 4 0 50
+R4 5 0 50
+.tran 0.01n 40n
+.control
+run
+wrdata /tests/results/10_sparam_4port_tran.csv v(2) v(3) v(4) v(5)
+.endc
+.end

@@ -1,0 +1,19 @@
+* 5-Stage Ring Oscillator using Standard Cells
+.include sg13g2_stdcell.spice
+Vdd dd GND 1.2
+* sg13g2_inv_1 pin order: Y A VDD VSS
+Xinv1 n2 n1 dd GND sg13g2_inv_1
+Xinv2 n3 n2 dd GND sg13g2_inv_1
+Xinv3 n4 n3 dd GND sg13g2_inv_1
+Xinv4 n5 n4 dd GND sg13g2_inv_1
+Xinv5 n1 n5 dd GND sg13g2_inv_1
+.ic v(n1)=1.2
+.lib cornerMOSlv.lib mos_tt
+.param temp=27
+.control
+save all
+tran 5p 5n uic
+wrdata /tests/results/05_tran_ring_osc.csv v(n1) v(n3)
+.endc
+.GLOBAL GND
+.end

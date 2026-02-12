@@ -1,0 +1,15 @@
+* VF Transient: RLC bandpass S-param (resonance at 3.16 GHz)
+* Tests VF with conjugate pole pairs from a resonant network
+* Expected: output shows ringing at ~3.16 GHz after pulse edge
+.options reltol=1e-3 itl4=200
+V1 1 0 PULSE(0 1 1n 0.2n 0.2n 5n 20n)
+R1 1 2 50
+A1 [2 0 3 0] bandpass_model
+.model bandpass_model sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/rlc_bandpass.s2p"
+R2 3 0 50
+.tran 0.01n 40n
+.control
+run
+wrdata /tests/results/08_sparam_rlc_bandpass.csv v(2) v(3)
+.endc
+.end

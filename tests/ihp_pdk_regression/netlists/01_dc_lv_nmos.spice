@@ -1,0 +1,15 @@
+* DC LV NMOS Id-Vds
+* Based on IHP SG13G2 PDK dc_lv_nmos test
+Vgs G GND 1.2
+Vds D GND 1.5
+Vd D net1 0
+XM1 net1 G GND GND sg13_lv_nmos w=1.0u l=0.45u ng=1 m=1
+.lib cornerMOSlv.lib mos_tt
+.param temp=27
+.control
+save all
+dc Vds 0 1.2 0.01 Vgs 0.3 1.0 0.1
+wrdata /tests/results/01_dc_lv_nmos.csv vd#branch
+.endc
+.GLOBAL GND
+.end

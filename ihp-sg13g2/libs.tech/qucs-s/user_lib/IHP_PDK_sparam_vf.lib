@@ -1,0 +1,134 @@
+<Qucs Library 2.1.0 "IHP_PDK_sparam_vf">
+
+<Component sparam_2port>
+  <Description>
+2-Port S-Parameter Block (Vector Fitting)
+Loads Touchstone .s2p file and creates time-domain
+model via Vector Fitting for transient simulation.
+Requires custom ngspice with VF support.
+
+Author: IHP PDK Authors, 2024
+  </Description>
+  <Model>
+.Def:IHP_PDK_sparam_vf_sparam_2port _net0 _net1 _net2 _net3 file="test.s2p" r_ref="50" n_poles="0" vf_tol="1e-3" vf_maxiter="10"
+.Def:End
+  </Model>
+  <Spice>* 2-Port S-Parameter VF Model
+.subckt sparam_2port_vf p1p p1n p2p p2n file=test.s2p r_ref=50 n_poles=0 vf_tol=1e-3 vf_maxiter=10
+A1 [p1p p1n p2p p2n] sp_mod
+.model sp_mod sparam(file={file} r_ref={r_ref} n_poles={n_poles} vf_tol={vf_tol} vf_maxiter={vf_maxiter})
+.ends sparam_2port_vf
+
+.SUBCKT IHP_PDK_sparam_vf_sparam_2port gnd _net0 _net1 _net2 _net3 file=test.s2p r_ref=50 n_poles=0 vf_tol=1e-3 vf_maxiter=10
+X1 _net0 _net1 _net2 _net3 sparam_2port_vf file={file} r_ref={r_ref} n_poles={n_poles} vf_tol={vf_tol} vf_maxiter={vf_maxiter}
+.ENDS
+  </Spice>
+  <VerilogModel>  </VerilogModel>
+  <VHDLModel>  </VHDLModel>
+  <Symbol>
+    <Rectangle -30 -20 60 40 #000080 2 1 #c0c0c0 1 0>
+    <Text -18 -10 12 #000080 0 "[S]">
+    <Line -30 -10 -10 0 #000080 2 1>
+    <Line -30 10 -10 0 #000080 2 1>
+    <Line 30 -10 10 0 #000080 2 1>
+    <Line 30 10 10 0 #000080 2 1>
+    <.PortSym -40 -10 1 0>
+    <.PortSym -40 10 2 0>
+    <.PortSym 40 -10 3 180>
+    <.PortSym 40 10 4 180>
+    <.ID 10 24 S "1=file=test.s2p=Touchstone file=" "1=r_ref=50=Reference impedance (Ohm)=" "1=n_poles=0=Number of poles (0=auto)=" "1=vf_tol=1e-3=VF tolerance=" "1=vf_maxiter=10=VF max iterations=">
+  </Symbol>
+</Component>
+
+<Component sparam_3port>
+  <Description>
+3-Port S-Parameter Block (Vector Fitting)
+Loads Touchstone .s3p file and creates time-domain
+model via Vector Fitting for transient simulation.
+Requires custom ngspice with VF support.
+
+Author: IHP PDK Authors, 2024
+  </Description>
+  <Model>
+.Def:IHP_PDK_sparam_vf_sparam_3port _net0 _net1 _net2 _net3 _net4 _net5 file="test.s3p" r_ref="50" n_poles="0" vf_tol="1e-3" vf_maxiter="10"
+.Def:End
+  </Model>
+  <Spice>* 3-Port S-Parameter VF Model
+.subckt sparam_3port_vf p1p p1n p2p p2n p3p p3n file=test.s3p r_ref=50 n_poles=0 vf_tol=1e-3 vf_maxiter=10
+A1 [p1p p1n p2p p2n p3p p3n] sp_mod
+.model sp_mod sparam(file={file} r_ref={r_ref} n_poles={n_poles} vf_tol={vf_tol} vf_maxiter={vf_maxiter})
+.ends sparam_3port_vf
+
+.SUBCKT IHP_PDK_sparam_vf_sparam_3port gnd _net0 _net1 _net2 _net3 _net4 _net5 file=test.s3p r_ref=50 n_poles=0 vf_tol=1e-3 vf_maxiter=10
+X1 _net0 _net1 _net2 _net3 _net4 _net5 sparam_3port_vf file={file} r_ref={r_ref} n_poles={n_poles} vf_tol={vf_tol} vf_maxiter={vf_maxiter}
+.ENDS
+  </Spice>
+  <VerilogModel>  </VerilogModel>
+  <VHDLModel>  </VHDLModel>
+  <Symbol>
+    <Rectangle -30 -30 60 60 #000080 2 1 #c0c0c0 1 0>
+    <Text -18 -10 12 #000080 0 "[S]">
+    <Line -30 -20 -10 0 #000080 2 1>
+    <Line -30 0 -10 0 #000080 2 1>
+    <Line 30 -20 10 0 #000080 2 1>
+    <Line 30 0 10 0 #000080 2 1>
+    <Line 30 20 10 0 #000080 2 1>
+    <Line -30 20 -10 0 #000080 2 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 0 2 0>
+    <.PortSym 40 -20 3 180>
+    <.PortSym 40 0 4 180>
+    <.PortSym 40 20 5 180>
+    <.PortSym -40 20 6 0>
+    <.ID 10 34 S "1=file=test.s3p=Touchstone file=" "1=r_ref=50=Reference impedance (Ohm)=" "1=n_poles=0=Number of poles (0=auto)=" "1=vf_tol=1e-3=VF tolerance=" "1=vf_maxiter=10=VF max iterations=">
+  </Symbol>
+</Component>
+
+<Component sparam_4port>
+  <Description>
+4-Port S-Parameter Block (Vector Fitting)
+Loads Touchstone .s4p file and creates time-domain
+model via Vector Fitting for transient simulation.
+Requires custom ngspice with VF support.
+
+Author: IHP PDK Authors, 2024
+  </Description>
+  <Model>
+.Def:IHP_PDK_sparam_vf_sparam_4port _net0 _net1 _net2 _net3 _net4 _net5 _net6 _net7 file="test.s4p" r_ref="50" n_poles="0" vf_tol="1e-3" vf_maxiter="10"
+.Def:End
+  </Model>
+  <Spice>* 4-Port S-Parameter VF Model
+.subckt sparam_4port_vf p1p p1n p2p p2n p3p p3n p4p p4n file=test.s4p r_ref=50 n_poles=0 vf_tol=1e-3 vf_maxiter=10
+A1 [p1p p1n p2p p2n p3p p3n p4p p4n] sp_mod
+.model sp_mod sparam(file={file} r_ref={r_ref} n_poles={n_poles} vf_tol={vf_tol} vf_maxiter={vf_maxiter})
+.ends sparam_4port_vf
+
+.SUBCKT IHP_PDK_sparam_vf_sparam_4port gnd _net0 _net1 _net2 _net3 _net4 _net5 _net6 _net7 file=test.s4p r_ref=50 n_poles=0 vf_tol=1e-3 vf_maxiter=10
+X1 _net0 _net1 _net2 _net3 _net4 _net5 _net6 _net7 sparam_4port_vf file={file} r_ref={r_ref} n_poles={n_poles} vf_tol={vf_tol} vf_maxiter={vf_maxiter}
+.ENDS
+  </Spice>
+  <VerilogModel>  </VerilogModel>
+  <VHDLModel>  </VHDLModel>
+  <Symbol>
+    <Rectangle -30 -40 60 80 #000080 2 1 #c0c0c0 1 0>
+    <Text -18 -10 12 #000080 0 "[S]">
+    <Line -30 -30 -10 0 #000080 2 1>
+    <Line -30 -10 -10 0 #000080 2 1>
+    <Line 30 -30 10 0 #000080 2 1>
+    <Line 30 -10 10 0 #000080 2 1>
+    <Line -30 10 -10 0 #000080 2 1>
+    <Line -30 30 -10 0 #000080 2 1>
+    <Line 30 10 10 0 #000080 2 1>
+    <Line 30 30 10 0 #000080 2 1>
+    <.PortSym -40 -30 1 0>
+    <.PortSym -40 -10 2 0>
+    <.PortSym 40 -30 3 180>
+    <.PortSym 40 -10 4 180>
+    <.PortSym -40 10 5 0>
+    <.PortSym -40 30 6 0>
+    <.PortSym 40 10 7 180>
+    <.PortSym 40 30 8 180>
+    <.ID 10 44 S "1=file=test.s4p=Touchstone file=" "1=r_ref=50=Reference impedance (Ohm)=" "1=n_poles=0=Number of poles (0=auto)=" "1=vf_tol=1e-3=VF tolerance=" "1=vf_maxiter=10=VF max iterations=">
+  </Symbol>
+</Component>
+

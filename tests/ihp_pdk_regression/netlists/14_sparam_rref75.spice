@@ -1,0 +1,16 @@
+* VF Transient: Non-50 ohm reference impedance (r_ref=75)
+* Tests the r_ref model parameter override
+* S-param data is defined at 50 ohm but we override to 75 ohm
+* This changes the S-to-Y conversion and thus the transient behavior
+* Expected: converges, output non-zero, different magnitude from 50-ohm case
+V1 1 0 PULSE(0 1 1n 0.1n 0.1n 5n 20n)
+R1 1 2 75
+A1 [2 0 3 0] sparam_75
+.model sparam_75 sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/test.s2p" r_ref=75
+R2 3 0 75
+.tran 0.01n 40n
+.control
+run
+wrdata /tests/results/14_sparam_rref75.csv v(2) v(3)
+.endc
+.end

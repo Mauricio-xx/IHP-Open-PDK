@@ -1,0 +1,12 @@
+* XSPICE S-param Transient (Vector Fitting)
+V1 1 0 PULSE(0 1 1n 0.1n 0.1n 5n 20n)
+R1 1 2 50
+A1 [2 0 3 0] sparam_model
+.model sparam_model sparam file="/pdk/ihp-sg13g2/libs.tech/ngspice/touchstone/test.s2p"
+R2 3 0 50
+.tran 0.01n 40n
+.control
+run
+wrdata /tests/results/06_sparam_tran.csv v(2) v(3)
+.endc
+.end
